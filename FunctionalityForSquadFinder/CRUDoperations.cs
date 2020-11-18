@@ -120,13 +120,11 @@ namespace FunctionalityForSquadFinder
 
 
         //DELETE methods 
-        public void DeleteMember(string memberId, string fName, string lName)
+        public void DeleteMember(Members member)
         {
-            using (var db = new TeamFinder3TAppContext())
-            {
-                db.Members.Remove(SelectedMember);
-                db.SaveChanges();
-            }
+            SelectedMember = _memberService.FindMember(member.MemberId);
+            _memberService.DeleteMember(SelectedMember);
+            _memberService.SaveMember();
         }
 
         public void DeleteSquadMember()
@@ -138,13 +136,11 @@ namespace FunctionalityForSquadFinder
             }
         }
 
-        public void DeleteSquad()
+        public void DeleteSquad(Squad squad)
         {
-            using (var db = new TeamFinder3TAppContext())
-            {
-                db.Squad.Remove(SelectedSquad);
-                db.SaveChanges();
-            }
+            SelectedSquad = _squadService.FindSquad(squad.SquadId);
+            _squadService.DeleteSquad(SelectedSquad);
+            _squadService.SaveSquad();
         }
 
         //SELECTION methods 
