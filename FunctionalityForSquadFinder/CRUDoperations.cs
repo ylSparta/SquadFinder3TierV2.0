@@ -12,7 +12,7 @@ namespace FunctionalityForSquadFinder
     {
         private SquadService _squadService = new SquadService();
         private MemberService _memberService = new MemberService();
-
+        private SquadMemberService _squadMemberService = new SquadMemberService();
 
         public Squad SelectedSquad { get; private set; }
         public SquadMembers SelectedSquadMember { get; private set; }
@@ -20,7 +20,7 @@ namespace FunctionalityForSquadFinder
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
 
         //CREATE methods 
@@ -41,24 +41,22 @@ namespace FunctionalityForSquadFinder
             
         }
 
-        public void CreateSquadMember(Members member, Squad squad)
+        public void CreateSquadMember(string memberId, string squadId)
         {
-            using (var db = new TeamFinder3TAppContext())
+            var result1 = _memberService.FindMember(memberId);
+            var result2 = _squadService.FindSquad(squadId);
+            if (result1 != null && result2 != null)
             {
-                var result1 = db.Members.Where(m => m.MemberId == member.MemberId);
-                var result2 = db.Squad.Where(s => s.SquadId == squad.SquadId);
-                if (result1.Count() == 1 && result2.Count() == 1)
+                SquadMembers squaMember = new SquadMembers()
                 {
-                    SquadMembers squaMember = new SquadMembers()
-                    {
-                        SquadMemberId = $"{member.MemberId}-{squad.SquadId}",
-                        MemberId = member.MemberId,
-                        SquadId = squad.SquadId
-                    };
-                    db.SquadMembers.Add(squaMember);
-                    db.SaveChanges();
-                }
+                    SquadMemberId = $"{memberId}-{squadId}",
+                    MemberId = memberId,
+                    SquadId = squadId
+                };
+                _squadMemberService.AddSquadMember(squaMember);
+                _squadMemberService.SaveSquadMember();
             }
+            
         }
 
         public void CreateSquad(string squadId, string squadLeader, int numberOfSquadMembers, string sport)
@@ -94,14 +92,15 @@ namespace FunctionalityForSquadFinder
 
         public void UpdateSquadMember(string squadMemberId, string squadId, string memberId)
         {
-            using (var db = new TeamFinder3TAppContext())
+            SelectedSquadMember = _squadMemberService.FindSquadMembers(squadMemberId);
+            if (SelectedSquadMember == null)
             {
-                SelectedSquadMember = db.SquadMembers.Where(s => s.SquadId == squadId).FirstOrDefault();
                 SelectedSquadMember.SquadId = squadId;
                 SelectedSquadMember.MemberId = memberId;
-                // write changes to database
-                db.SaveChanges();
+                _squadMemberService.UpdateSquadMember(SelectedSquadMember);
+                _squadMemberService.SaveSquadMember();
             }
+               
         }
 
         public void UpdateSquad(string squadId, string squadLeader, int numberOfSquadMembers, string sport)
@@ -127,13 +126,12 @@ namespace FunctionalityForSquadFinder
             _memberService.SaveMember();
         }
 
-        public void DeleteSquadMember()
+        public void DeleteSquadMember(SquadMembers squadMember)
         {
-            using (var db = new TeamFinder3TAppContext())
-            {
-                db.SquadMembers.Remove(SelectedSquadMember);
-                db.SaveChanges();
-            }
+            SelectedSquadMember = _squadMemberService.FindSquadMembers(squadMember.SquadMemberId);
+            _squadMemberService.DeleteSquadMember(SelectedSquadMember);
+            _squadMemberService.SaveSquadMember();
+            
         }
 
         public void DeleteSquad(Squad squad)
@@ -167,12 +165,8 @@ namespace FunctionalityForSquadFinder
         }
 
         public List<SquadMembers> GetAllSquadMembers(string squadId)
-        {
-            using (var db = new TeamFinder3TAppContext())
-            {
-                var squadMembers = db.SquadMembers.Where(s => s.SquadId == squadId).ToList();
-                return squadMembers;
-            }
+        {   
+            return _squadMemberService.GetSquadMembers();  
         }
 
         public List<Squad> GetAllSquads()
