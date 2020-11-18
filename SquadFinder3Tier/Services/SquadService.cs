@@ -26,7 +26,7 @@ namespace SquadFinder3Tier.Services
 
         public List<Squad> GetSquads()
         {
-           return _context.Squad.ToList();
+            return _context.Squad.ToList();
         }
 
         public void DeleteSquad(Squad squad)

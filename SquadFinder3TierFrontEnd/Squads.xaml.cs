@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using FunctionalityForSquadFinder;
 using SquadFinder3Tier;
 using System.Linq;
+using SquadFinder3Tier.Services;
 
 namespace SquadFinder3TierFrontEnd
 {
@@ -20,8 +21,9 @@ namespace SquadFinder3TierFrontEnd
     /// </summary>
     public partial class Window1 : Window
     {
-        public CRUDoperationsForMembers _crudOps = new CRUDoperationsForMembers();
-
+        public CRUDoperationsForMembers _crudOpsForMembers = new CRUDoperationsForMembers();
+        public CRUDoperationsForSquadMembers _crudOpsForSquadMembers = new CRUDoperationsForSquadMembers();
+        public CRUDoperationsForSquad _crudOpsForSquad = new CRUDoperationsForSquad();
 
         public Window1()
         {
@@ -31,11 +33,10 @@ namespace SquadFinder3TierFrontEnd
 
         private void SquadListBox_ContainsList()
         {
-            SquadListBox.ItemsSource = _crudOps.GetAllSquads();
+            SquadListBox.ItemsSource = _crudOpsForSquad.GetAllSquads();
             
         }
 
-       
 
         private void HomePageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -44,8 +45,6 @@ namespace SquadFinder3TierFrontEnd
             homePage.Show();
         }
 
-
-
         private void SquadMemberListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -53,10 +52,10 @@ namespace SquadFinder3TierFrontEnd
 
         private void SquadListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _crudOps.SetSelectedSquad(SquadListBox.SelectedItem);          
-            if (_crudOps.SelectedSquad != null)
+            _crudOpsForSquad.SetSelectedSquad(SquadListBox.SelectedItem);
+            if (_crudOpsForSquad.SelectedSquad != null)
             {
-                SquadMemberListBox.ItemsSource = _crudOps.GetAllSquadMembers(_crudOps.SelectedSquad.SquadId);
+                SquadMemberListBox.ItemsSource = _crudOpsForSquadMembers.GetAllSquadMembers(_crudOpsForSquad.SelectedSquad.SquadId);
             }
         }
     }

@@ -24,9 +24,9 @@ namespace SquadFinder3Tier.Services
             return _context.SquadMembers.Where(sm => sm.SquadMemberId == squadmemberId).FirstOrDefault();
         }
 
-        public List<SquadMembers> GetSquadMembers()
+        public List<SquadMembers> GetSquadMembers(string squadId)
         {
-            return _context.SquadMembers.ToList();
+            return _context.SquadMembers.Where(sm => sm.SquadId == squadId).ToList();
         }
 
         public void SaveSquadMember()

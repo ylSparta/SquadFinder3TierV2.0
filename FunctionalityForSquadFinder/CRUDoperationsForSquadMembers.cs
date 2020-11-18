@@ -64,7 +64,7 @@ namespace FunctionalityForSquadFinder
 
         public List<SquadMembers> GetAllSquadMembers(string squadId)
         {
-            return _squadMemberService.GetSquadMembers();
+            return _squadMemberService.GetSquadMembers(squadId);
         }
     }
 }

@@ -19,8 +19,9 @@ namespace SquadFinder3TierFrontEnd
     /// </summary>
     public partial class Window2 : Window
     {
-        public CRUDoperationsForMembers _crudOps = new CRUDoperationsForMembers();
-
+        public CRUDoperationsForMembers _crudOpsForMembers = new CRUDoperationsForMembers();
+        public CRUDoperationsForSquadMembers _crudOpsForSquadMembers = new CRUDoperationsForSquadMembers();
+        public CRUDoperationsForSquad _crudOpsForSquad = new CRUDoperationsForSquad();
 
         public Window2()
         {
@@ -30,7 +31,7 @@ namespace SquadFinder3TierFrontEnd
 
         private void MemberListBox_ContainsList()
         {
-            MembersListBox.ItemsSource = _crudOps.GetAllMembers();
+            MembersListBox.ItemsSource = _crudOpsForMembers.GetAllMembers();
         }
 
         private void HomePageButton_Click(object sender, RoutedEventArgs e)

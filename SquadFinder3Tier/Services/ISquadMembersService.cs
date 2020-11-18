@@ -16,7 +16,7 @@ namespace SquadFinder3Tier.Services
 
         public void SaveSquadMember();
 
-        public List<SquadMembers> GetSquadMembers();
+        public List<SquadMembers> GetSquadMembers(string squadId);
 
 
 
