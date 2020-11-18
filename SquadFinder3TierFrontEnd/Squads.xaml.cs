@@ -20,7 +20,7 @@ namespace SquadFinder3TierFrontEnd
     /// </summary>
     public partial class Window1 : Window
     {
-        public CRUDoperations _crudOps = new CRUDoperations();
+        public CRUDoperationsForMembers _crudOps = new CRUDoperationsForMembers();
 
 
         public Window1()
