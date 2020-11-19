@@ -19,6 +19,15 @@ namespace FunctionalityForSquadFinder
             
         }
 
+        public CRUDoperationsForMembers()
+        {
+            
+        }
+
+        public CRUDoperationsForMembers(MemberService memService)
+        {
+            _memberService = memService;
+        }
         
         public void CreateMember(string memberId, string fName, string lName)
         {
