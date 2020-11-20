@@ -9,6 +9,15 @@ namespace SquadFinder3Tier.Services
     {
         private readonly TeamFinder3TAppContext _context = new TeamFinder3TAppContext();
 
+        public MemberService()
+        {
+        }
+
+        public MemberService(TeamFinder3TAppContext context)
+        {
+            _context = context;
+        }
+
 
         public void AddMember(Members member)
         {

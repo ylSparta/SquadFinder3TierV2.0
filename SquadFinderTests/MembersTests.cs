@@ -8,6 +8,7 @@ namespace SquadFinderTests
 {
     public class Tests
     {
+        private TeamFinder3TAppContext _context;
         private CRUDoperationsForMembers _crudMem;
 
         [OneTimeSetUp]
@@ -16,7 +17,11 @@ namespace SquadFinderTests
             var options = new DbContextOptionsBuilder<TeamFinder3TAppContext>()
                 .UseInMemoryDatabase(databaseName: "FakeTeamFinderDb")
                 .Options;
-            
+            _context = new TeamFinder3TAppContext(options);
+
+            MemberService memberService = new MemberService(_context);
+
+            _crudMem = new CRUDoperationsForMembers(memberService);
         }
 
         [Test]

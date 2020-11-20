@@ -16,12 +16,10 @@ namespace FunctionalityForSquadFinder
 
         static void Main(string[] args)
         {
-            
         }
 
         public CRUDoperationsForMembers()
         {
-            
         }
 
         public CRUDoperationsForMembers(MemberService memService)
