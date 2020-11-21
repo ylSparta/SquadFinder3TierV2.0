@@ -29,7 +29,6 @@ namespace SquadFinderTests
 
 
 
-
         }
 
         [Test]

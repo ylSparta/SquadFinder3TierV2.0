@@ -13,6 +13,15 @@ namespace FunctionalityForSquadFinder
         private SquadService _squadService = new SquadService();
         public Squad SelectedSquad { get; private set; }
 
+        public CRUDoperationsForSquad()
+        {
+        }
+
+        public CRUDoperationsForSquad(SquadService squaService)
+        {
+            _squadService = squaService;
+        }
+
 
         public void CreateSquad(string squadId, string squadLeader, int numberOfSquadMembers, string sport)
         {
