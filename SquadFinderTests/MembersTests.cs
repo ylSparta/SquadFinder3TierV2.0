@@ -27,12 +27,10 @@ namespace SquadFinderTests
             _crudMem.CreateMember("00003", "Craig", "Item");
             _crudMem.CreateMember("00004", "Will", "Potter");
 
-
-
         }
 
         [Test]
-        public void TestThatFakeDBHasNoEntries()
+        public void TestThatFakeDBHasEntries()
         {
             Assert.That(_context.Members.Count(), Is.EqualTo(_crudMem.GetAllMembers().Count));
         }
@@ -47,9 +45,9 @@ namespace SquadFinderTests
         public void CheckIfNewMemeberHasBeenAddedToDB()
         {
             //Arrange
-            _crudMem.CreateMember("00728","Paul","Merch");
+            _crudMem.CreateMember("00728", "Paul", "Merch");
             //Act
-            var newMember = (_context.Members.Find("00728"));
+            var newMember = _context.Members.Find("00728");
             Assert.That(newMember, Is.Not.Null);
             //Assert
             Assert.That(newMember.FirstName, Is.EqualTo("Paul"));
@@ -63,12 +61,36 @@ namespace SquadFinderTests
             //Arrange
             _crudMem.CreateMember("00728", "Paul", "Merch");
             var newMember = _context.Members.Find("00728");
-            Assert.That(newMember.MemberId, Is.EqualTo("00728"));
+            Assert.That(newMember.FirstName, Is.EqualTo("Paul"));
             //Act
             _crudMem.DeleteMember(newMember);
             //Assert
             Assert.That(_context.Members, Does.Not.Contain(newMember));
         }
 
+        [Test]
+        public void NewMemberNotCreated_IfMemberAlreadyExists()
+        {
+            //Arrange
+            var fisrtMemberCount = _context.Members.Count();
+            _crudMem.CreateMember("00001", "Test", "Member");
+            //Act
+            var secondMemberCount = _context.Members.Count();
+            //Assert
+            Assert.That(fisrtMemberCount, Is.EqualTo(secondMemberCount));
+        }
+
+        [Test]
+        public void CheckIfMembersDetailsWereUpdated()
+        {
+            //Arrange
+            _crudMem.UpdateMember("Will", "Paulo", "00004");
+            //Act
+            var updatedMember = _context.Members.Find("00004");
+            //Assert
+            Assert.That(updatedMember.LastName, Is.EqualTo("Paulo"));
+        }
+
+        
     }
 }

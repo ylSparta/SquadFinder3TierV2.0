@@ -15,6 +15,14 @@ namespace FunctionalityForSquadFinder
         private SquadService _squadService = new SquadService();
 
 
+        public CRUDoperationsForSquadMembers()
+        {
+        }
+
+        public CRUDoperationsForSquadMembers(SquadMemberService squaMemService)
+        {
+            _squadMemberService = squaMemService;
+        }
 
         public SquadMembers SelectedSquadMember { get; private set; }
 
